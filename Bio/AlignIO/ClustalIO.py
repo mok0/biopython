@@ -101,7 +101,9 @@ class ClustalIterator(AlignmentIterator):
         if not line:
             raise StopIteration
 
-        # Whitelisted headers we know about
+        line = line.decode()
+
+        #Whitelisted headers we know about
         known_headers = ['CLUSTAL', 'PROBCONS', 'MUSCLE', 'MSAPROBS', 'Kalign']
         if line.strip().split()[0] not in known_headers:
             raise ValueError("%s is not a known CLUSTAL header: %s" %

@@ -197,7 +197,9 @@ class FastaWriter(SequentialSequenceWriter):
 
         assert "\n" not in title
         assert "\r" not in title
-        self.handle.write(">%s\n" % title)
+        #self.handle.write(">%s\n" % title)
+        s = ">%s\n" % title
+        self.handle.write(s.encode())
 
         data = self._get_seq_string(record)  # Catches sequence being None
 
@@ -206,9 +208,13 @@ class FastaWriter(SequentialSequenceWriter):
 
         if self.wrap:
             for i in range(0, len(data), self.wrap):
-                self.handle.write(data[i:i + self.wrap] + "\n")
+                #self.handle.write(data[i:i + self.wrap].encode() + "\n")
+                s = data[i:i + self.wrap] + "\n"
+                self.handle.write(s.encode())
         else:
-            self.handle.write(data + "\n")
+            #self.handle.write(data.encode() + "\n")
+            s = data + "\n"
+            self.handle.write(s.encode())
 
 if __name__ == "__main__":
     from Bio._utils import run_doctest
