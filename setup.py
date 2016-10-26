@@ -427,6 +427,9 @@ else:
     Extension('Bio.Nexus.cnexus',
               ['Bio/Nexus/cnexus.c']
               ),
+    Extension('Bio.PDB.MMCIFlex',
+              ['Bio/PDB/mmCIF/MMCIFlexmodule.c', 'Bio/PDB/mmCIF/lex.yy.c']
+              ),
     ]
 
 # Add extensions that requires NumPy to build

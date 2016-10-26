@@ -1,4 +1,9 @@
 #include <Python.h>
+
+#if PY_MAJOR_VERSION >= 3
+#define IS_PY3K
+#endif
+
 #include "lex.yy.h"
 
 
@@ -62,8 +67,34 @@ static PyMethodDef MMCIFlexMethods[]=
 	{NULL,      	NULL}        			/* Sentinel */
 };
 
+#ifdef IS_PY3K
+
+PyDoc_STRVAR(MMCIFlexDoc,
+	     "mmCIF parser extension module.");
+
+static struct PyModuleDef moduledef = {
+  PyModuleDef_HEAD_INIT,
+  "MMCIFlex",           /* name of module */
+  MMCIFlexDoc,          /* module documentation */
+  -1,                   /* m_size */
+  MMCIFlexMethods,      /* methods */
+  NULL,                 /* m_reload */
+  NULL,                 /* m_traverse */
+  NULL,                 /* m_clear */
+  NULL                  /* m_free */
+};
+
+PyMODINIT_FUNC
+PyInit_MMCIFlex(void) {
+  PyObject *module = PyModule_Create(&moduledef);
+  return module;
+}
+
+#else
 
 void initMMCIFlex(void)
 {
 	(void) Py_InitModule("MMCIFlex", MMCIFlexMethods);
 }
+
+#endif
